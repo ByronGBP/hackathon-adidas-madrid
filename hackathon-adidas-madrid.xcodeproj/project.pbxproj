@@ -13,6 +13,11 @@
 		505DC91420B9594700FD5ED7 /* hackathon_adidas_madrid.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 505DC91220B9594700FD5ED7 /* hackathon_adidas_madrid.xcdatamodeld */; };
 		505DC91620B9594A00FD5ED7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 505DC91520B9594A00FD5ED7 /* Assets.xcassets */; };
 		505DC91920B9594A00FD5ED7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 505DC91720B9594A00FD5ED7 /* LaunchScreen.storyboard */; };
+		505DC92520B9AF5400FD5ED7 /* Square.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505DC92420B9AF5400FD5ED7 /* Square.swift */; };
+		505DC92720B9AF6200FD5ED7 /* SquareSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505DC92620B9AF6200FD5ED7 /* SquareSegment.swift */; };
+		505DC92A20B9AFEF00FD5ED7 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505DC92920B9AFEF00FD5ED7 /* Utilities.swift */; };
+		505DC92C20B9B3C700FD5ED7 /* ARSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505DC92B20B9B3C700FD5ED7 /* ARSceneView.swift */; };
+		505DC92E20B9B58400FD5ED7 /* ARSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505DC92D20B9B58400FD5ED7 /* ARSceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +29,11 @@
 		505DC91520B9594A00FD5ED7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		505DC91820B9594A00FD5ED7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		505DC91A20B9594A00FD5ED7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		505DC92420B9AF5400FD5ED7 /* Square.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Square.swift; sourceTree = "<group>"; };
+		505DC92620B9AF6200FD5ED7 /* SquareSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareSegment.swift; sourceTree = "<group>"; };
+		505DC92920B9AFEF00FD5ED7 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		505DC92B20B9B3C700FD5ED7 /* ARSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSceneView.swift; sourceTree = "<group>"; };
+		505DC92D20B9B58400FD5ED7 /* ARSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +66,8 @@
 		505DC90A20B9594600FD5ED7 /* hackathon-adidas-madrid */ = {
 			isa = PBXGroup;
 			children = (
+				505DC92820B9AFE300FD5ED7 /* Utilities */,
+				505DC92320B9AF3F00FD5ED7 /* Square */,
 				505DC90B20B9594700FD5ED7 /* AppDelegate.swift */,
 				505DC90D20B9594700FD5ED7 /* ViewController.swift */,
 				505DC90F20B9594700FD5ED7 /* Main.storyboard */,
@@ -63,8 +75,27 @@
 				505DC91720B9594A00FD5ED7 /* LaunchScreen.storyboard */,
 				505DC91A20B9594A00FD5ED7 /* Info.plist */,
 				505DC91220B9594700FD5ED7 /* hackathon_adidas_madrid.xcdatamodeld */,
+				505DC92B20B9B3C700FD5ED7 /* ARSceneView.swift */,
+				505DC92D20B9B58400FD5ED7 /* ARSceneDelegate.swift */,
 			);
 			path = "hackathon-adidas-madrid";
+			sourceTree = "<group>";
+		};
+		505DC92320B9AF3F00FD5ED7 /* Square */ = {
+			isa = PBXGroup;
+			children = (
+				505DC92420B9AF5400FD5ED7 /* Square.swift */,
+				505DC92620B9AF6200FD5ED7 /* SquareSegment.swift */,
+			);
+			path = Square;
+			sourceTree = "<group>";
+		};
+		505DC92820B9AFE300FD5ED7 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				505DC92920B9AFEF00FD5ED7 /* Utilities.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +169,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				505DC92A20B9AFEF00FD5ED7 /* Utilities.swift in Sources */,
+				505DC92520B9AF5400FD5ED7 /* Square.swift in Sources */,
 				505DC91420B9594700FD5ED7 /* hackathon_adidas_madrid.xcdatamodeld in Sources */,
 				505DC90E20B9594700FD5ED7 /* ViewController.swift in Sources */,
+				505DC92E20B9B58400FD5ED7 /* ARSceneDelegate.swift in Sources */,
 				505DC90C20B9594700FD5ED7 /* AppDelegate.swift in Sources */,
+				505DC92C20B9B3C700FD5ED7 /* ARSceneView.swift in Sources */,
+				505DC92720B9AF6200FD5ED7 /* SquareSegment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

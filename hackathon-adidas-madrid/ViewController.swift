@@ -9,21 +9,35 @@
 import UIKit
 import ARKit
 
-class ViewController: UIViewController, ARSCNViewDelegate {
-
-    @IBOutlet weak var sceneView: ARSCNView!
+class ViewController: UIViewController {
     
+    
+    @IBOutlet weak var sceneView: ARSceneView!
+    
+    var fieldArea = FieldArea()
 
+    let updateQueue = DispatchQueue(label: "com.madidas.adgile")
+    
+    var screenCenter: CGPoint {
+        let bounds = sceneView.bounds
+        return CGPoint(x: bounds.midX, y: bounds.midY)
+    }
+    
+    var session: ARSession {
+        return sceneView.session
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let configuration = ARWorldTrackingConfiguration()
-        self.sceneView.debugOptions = [ ARSCNDebugOptions.showWorldOrigin, ARSCNDebugOptions.showFeaturePoints]
-        configuration.planeDetection = .horizontal
-        self.sceneView.session.run(configuration)
-        self.sceneView.delegate = self
+        sceneView.delegate = self
+
+        sceneView.session.delegate = self
         
-        self.sceneView.autoenablesDefaultLighting = true
+
+        setupCamera()
+        sceneView.scene.rootNode.addChildNode(fieldArea)
+        sceneView.automaticallyUpdatesLighting = false
         
     }
 
@@ -31,37 +45,62 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
     
-    func createConcrete(planeAnchor: ARPlaneAnchor) -> SCNNode {
-        let concreteNode = SCNNode(geometry: SCNPlane(width: 1, height: 1))
-        concreteNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
-        concreteNode.geometry?.firstMaterial?.isDoubleSided = true
-        concreteNode.name = "plane"
-        concreteNode.position = SCNVector3(planeAnchor.center.x,planeAnchor.center.y,planeAnchor.center.z)
-        concreteNode.eulerAngles = SCNVector3(90.degreesToRadians, 0, 0)
-        return concreteNode
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // Prevent the screen from being dimmed to avoid interuppting the AR experience.
+        UIApplication.shared.isIdleTimerDisabled = true
+        
+        // Start the `ARSession`.
+        resetTracking()
     }
     
-    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
-        print("updating floor's anchor...")
-        node.enumerateChildNodes { (childNode, _) in
-            if (childNode.name == "plane") {
-                print("yes!")
-                childNode.removeFromParentNode()
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Pause the view's session
+        sceneView.session.pause()
+    }
+    
+    func resetTracking() {
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = [.horizontal, .vertical]
+        session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+    }
+    
+    func setupCamera() {
+        guard let camera = sceneView.pointOfView?.camera else {
+            fatalError("Expected a valid `pointOfView` from the scene.")
+        }
+        
+        /*
+         Enable HDR camera settings for the most realistic appearance
+         with environmental lighting and physically based materials.
+         */
+        camera.wantsHDR = true
+        camera.exposureOffset = -1
+        camera.minimumExposure = -1
+        camera.maximumExposure = 3
+    }
+    
+    func updateFocusSquare() {
+        
+        // Perform hit testing only when ARKit tracking is in a good state.
+        if let camera = session.currentFrame?.camera, case .normal = camera.trackingState,
+            let result = self.sceneView.smartHitTest(screenCenter) {
+            updateQueue.async {
+                self.sceneView.scene.rootNode.addChildNode(self.fieldArea)
+                self.fieldArea.state = .detecting(hitTestResult: result, camera: camera)
+            }
+        } else {
+            updateQueue.async {
+                self.fieldArea.state = .initializing
+                self.sceneView.pointOfView?.addChildNode(self.fieldArea)
             }
         }
-        let concreteNode = createConcrete(planeAnchor: planeAnchor)
-        node.addChildNode(concreteNode)
     }
-    
-
 }
 
 
-extension Int {
-    
-    var degreesToRadians: Double { return Double(self) * .pi/180}
-}
 
