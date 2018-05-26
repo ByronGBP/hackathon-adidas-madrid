@@ -34,14 +34,26 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     
     func createConcrete(planeAnchor: ARPlaneAnchor) -> SCNNode {
-        let concreteNode = SCNNode(geometry: SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(CGFloat(planeAnchor.extent.z))))
-        concreteNode.geometry?.firstMaterial?.diffuse.contents = #imageLiteral(resourceName: "concrete")
+        let concreteNode = SCNNode(geometry: SCNPlane(width: 1, height: 1))
+        concreteNode.geometry?.firstMaterial?.diffuse.contents = UIColor.red
         concreteNode.geometry?.firstMaterial?.isDoubleSided = true
+        concreteNode.name = "plane"
         concreteNode.position = SCNVector3(planeAnchor.center.x,planeAnchor.center.y,planeAnchor.center.z)
         concreteNode.eulerAngles = SCNVector3(90.degreesToRadians, 0, 0)
-        let staticBody = SCNPhysicsBody.static()
-        concreteNode.physicsBody = staticBody
         return concreteNode
+    }
+    
+    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+        guard let planeAnchor = anchor as? ARPlaneAnchor else {return}
+        print("updating floor's anchor...")
+        node.enumerateChildNodes { (childNode, _) in
+            if (childNode.name == "plane") {
+                print("yes!")
+                childNode.removeFromParentNode()
+            }
+        }
+        let concreteNode = createConcrete(planeAnchor: planeAnchor)
+        node.addChildNode(concreteNode)
     }
     
 
