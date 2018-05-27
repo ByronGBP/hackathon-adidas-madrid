@@ -27,6 +27,7 @@ class FieldArea: SCNNode {
     enum State: Equatable {
         case initializing
         case detecting(hitTestResult: ARHitTestResult, camera: ARCamera?)
+        case fixed
     }
     
     // MARK: - Configuration Properties
@@ -41,16 +42,16 @@ class FieldArea: SCNNode {
     static let scaleForClosedSquare: Float = 0.97
     
     // Side length of the focus square segments when it is open (w.r.t. to a 1x1 square).
-    static let sideLengthForOpenSegments: CGFloat = 0.2
+    static let sideLengthForOpenSegments: CGFloat = 0.5
     
     // Duration of the open/close animation
     static let animationDuration = 0.7
     
-    static let primaryColor =  #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
+    static let primaryColor =  #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
 
     
     // Color of the focus square fill.
-    static let fillColor = #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
+    static let fillColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
     
     // MARK: - Properties
     
@@ -59,6 +60,7 @@ class FieldArea: SCNNode {
         switch state {
         case .initializing: return nil
         case .detecting(let hitTestResult, _): return hitTestResult.worldTransform.translation
+        case .fixed: return nil
         }
     }
     
@@ -71,13 +73,15 @@ class FieldArea: SCNNode {
                 displayAsBillboard()
                 
             case let .detecting(hitTestResult, camera):
-                if let planeAnchor = hitTestResult.anchor as? ARPlaneAnchor {
-                    displayAsClosed(for: hitTestResult, planeAnchor: planeAnchor, camera: camera)
-                    currentPlaneAnchor = planeAnchor
+                if let _ = hitTestResult.anchor as? ARPlaneAnchor {
+                    // displayAsClosed(for: hitTestResult, planeAnchor: planeAnchor, camera: camera)
+                    // currentPlaneAnchor = planeAnchor
                 } else {
                     displayAsOpen(for: hitTestResult, camera: camera)
                     currentPlaneAnchor = nil
                 }
+            case .fixed:
+                performCloseAnimation(flash: false)
             }
         }
     }
@@ -139,7 +143,7 @@ class FieldArea: SCNNode {
         let s8 = Segment(name: "s8", corner: .bottomRight, alignment: .horizontal)
         segments = [s1, s2, s3, s4, s5, s6, s7, s8]
         
-        let sl: Float = 0.5  // segment length
+        let sl: Float = 4  // segment length
         let c: Float = FieldArea.thickness / 2 // correction to align lines perfectly
         s1.simdPosition += float3(-(sl / 2 - c), -(sl - c), 0)
         s2.simdPosition += float3(sl / 2 - c, -(sl - c), 0)
@@ -214,6 +218,9 @@ class FieldArea: SCNNode {
         updateTransform(for: position, hitTestResult: hitTestResult, camera: camera)
     }
     
+    private func fixOn() {
+    }
+    
     // MARK: Helper Methods
     
     /// Update the transform of the focus square to be aligned with the camera.
@@ -224,7 +231,7 @@ class FieldArea: SCNNode {
         // Move to average of recent positions to avoid jitter.
         let average = recentFocusSquarePositions.reduce(float3(0), { $0 + $1 }) / Float(recentFocusSquarePositions.count)
         self.simdPosition = average
-        self.simdScale = float3(scaleBasedOnDistance(camera: camera))
+        // self.simdScale = float3(scaleBasedOnDistance(camera: camera))
         
         // Correct y rotation of camera square.
         guard let camera = camera else { return }
@@ -356,7 +363,7 @@ class FieldArea: SCNNode {
         SCNTransaction.animationDuration = FieldArea.animationDuration / 4
         positioningNode.opacity = 1.0
         for segment in segments {
-            segment.open()
+            segment.close()
         }
         SCNTransaction.completionBlock = {
             self.positioningNode.runAction(pulseAction(), forKey: "pulse")
@@ -471,7 +478,7 @@ class FieldArea: SCNNode {
     
     private lazy var fillPlane: SCNNode = {
         let correctionFactor = FieldArea.thickness / 2 // correction to align lines perfectly
-        let length = CGFloat(1.0 - FieldArea.thickness * 2 + correctionFactor)
+        let length = CGFloat(4.0 - FieldArea.thickness * 2 + correctionFactor)
         
         let plane = SCNPlane(width: length, height: length)
         let node = SCNNode(geometry: plane)

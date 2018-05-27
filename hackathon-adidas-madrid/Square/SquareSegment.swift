@@ -59,10 +59,10 @@ extension FieldArea {
         // MARK: - Configuration & Initialization
         
         /// Thickness of the focus square lines in m.
-        static let thickness: CGFloat = 0.018
+        static let thickness: CGFloat = 0.18
         
         /// Length of the focus square lines in m.
-        static let length: CGFloat = 0.5  // segment length
+        static let length: CGFloat = 4  // segment length
         
         /// Side length of the focus square segments when it is open (w.r.t. to a 1x1 square).
         static let openLength: CGFloat = 0.2
