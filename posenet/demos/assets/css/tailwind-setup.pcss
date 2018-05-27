@@ -1,0 +1,82 @@
+@tailwind preflight;
+
+@font-face {
+    font-family: 'adineuePRO';
+    src: url('../fonts/adineuePRO-Regular.eot');
+    src: url('../fonts/adineuePRO-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/adineuePRO-Regular.woff2') format('woff2'),
+        url('../fonts/adineuePRO-Regular.woff') format('woff'),
+        url('../fonts/adineuePRO-Regular.ttf') format('truetype'),
+        url('../fonts/adineuePRO-Regular.svg#adineuePRO-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'adineuePRO';
+    src: url('../fonts/adineuePRO-Bold.eot');
+    src: url('../fonts/adineuePRO-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/adineuePRO-Bold.woff2') format('woff2'),
+        url('../fonts/adineuePRO-Bold.woff') format('woff'),
+        url('../fonts/adineuePRO-Bold.ttf') format('truetype'),
+        url('../fonts/adineuePRO-Bold.svg#adineuePRO-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AdihausDIN';
+    src: url('../fonts/AdihausDIN-Regular.eot');
+    src: url('../fonts/AdihausDIN-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/AdihausDIN-Regular.woff2') format('woff2'),
+        url('../fonts/AdihausDIN-Regular.woff') format('woff'),
+        url('../fonts/AdihausDIN-Regular.ttf') format('truetype'),
+        url('../fonts/AdihausDIN-Regular.svg#AdihausDIN-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'fonticons-adidas';
+    src: url('../fonts/fonticons-adidas.eot');
+    src: url('../fonts/fonticons-adidas.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/fonticons-adidas.woff2') format('woff2'),
+        url('../fonts/fonticons-adidas.woff') format('woff'),
+        url('../fonts/fonticons-adidas.ttf') format('truetype'),
+        url('../fonts/fonticons-adidas.svg#fonticons-adidas') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@tailwind utilities;
+
+@responsive {
+  .clip {
+    border: 0;
+    clip: rect(0 0 0 0);
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    white-space: nowrap;
+  }
+}
+
+.aspect-ratio {
+  @apply .relative;
+  height: 0;
+  padding-bottom: 100%;
+}
+
+.aspect-ratio > * {
+  @apply .absolute .pin .w-full .h-full;
+}
+
+/* Custom CSS */
+input[type="radio"]:checked + label {
+  @apply .text-white .bg-black;
+}
