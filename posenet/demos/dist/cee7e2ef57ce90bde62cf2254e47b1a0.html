@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Madidas — Machine Learning Factory</title>
+    <link rel="stylesheet" href="/dist/6fd5dd68d2f469c6b61f205e6d44d67d.css">
+</head>
+
+<body class="font-adihaus">
+
+    <div id="loading">
+        Loading the model...
+    </div>
+
+    <header class="z-50 sticky pin-t p-4 bg-black">
+        <nav class="uppercase -mb-4 font-adineue font-bold">
+            <ul class="list-reset flex">
+                <li>
+                    <a class="block px-2 py-4 text-white hover:text-black hover:bg-white no-underline" href="#setup">Setup</a>
+                </li>
+                <li>
+                    <a class="block px-2 py-4 text-white hover:text-black hover:bg-white no-underline" href="#learn">Learn</a>
+                </li>
+                <li>
+                    <a class="block px-2 py-4 text-white hover:text-black hover:bg-white no-underline" href="#results">Results</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <section id="setup" class="flex flex-col justify-center items-center min-h-screen py-16 text-center">
+
+        <header class="max-w-md mx-auto mb-16">
+            <h2 class="text-6xl font-adineue font-bold uppercase">Setup</h2>
+            <p class="mt-6 text-lg">Choose whatever options describe the kind of training you're going to practice.</p>
+        </header>
+
+        <form class="flex flex-wrap justify-center max-w-lg mx-auto">
+            <fieldset class="w-1/2 mx-4 mb-12">
+                <legend class="mb-4 text-lg uppercase">Team or nah?</legend>
+                <div class="flex justify-center">
+                    <input class="clip" type="radio" name="team" id="solo">
+                    <label class="inline-block w-full mx-2 p-1 border border-gray cursor-pointer" for="solo">
+                        <span class="inline-block p-3">Solo</span>
+                    </label>
+                    <input class="clip" type="radio" name="team" id="team">
+                    <label class="inline-block w-full mx-2 p-1 border border-gray cursor-pointer" for="team">
+                        <span class="inline-block p-3">Team</span>
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset class="w-full mx-4 mb-12">
+                <legend class="mb-4 text-lg uppercase">Activity</legend>
+                <div class="flex justify-center">
+                    <input class="clip" type="radio" name="activity" id="skills">
+                    <label class="inline-block w-full mx-2 p-1 border border-gray cursor-pointer" for="skills">
+                        <span class="inline-block p-3">Skills</span>
+                    </label>
+                    <input class="clip" type="radio" name="activity" id="personal-training">
+                    <label class="inline-block w-full mx-2 p-1 border border-gray cursor-pointer" for="personal-training">
+                        <span class="inline-block p-3">Personal training</span>
+                    </label>
+                    <input class="clip" type="radio" name="activity" id="team-building">
+                    <label class="inline-block w-full mx-2 p-1 border border-gray cursor-pointer" for="team-building">
+                        <span class="inline-block p-3">Team-building</span>
+                    </label>
+                    <input class="clip" type="radio" name="activity" id="challenges">
+                    <label class="inline-block w-full mx-2 p-1 border border-gray cursor-pointer" for="challenges">
+                        <span class="inline-block p-3">Challenges</span>
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset class="w-1/2 mx-4 mb-12">
+                <legend class="mb-4 text-lg uppercase">Dominant hand</legend>
+                <div class="flex justify-center">
+                    <input class="clip" type="radio" name="dominant-hand" id="leftie">
+                    <label class="inline-block w-full mx-2 p-1 border border-gray cursor-pointer" for="leftie">
+                        <span class="inline-block p-3">Left-handed</span>
+                    </label>
+                    <input class="clip" type="radio" name="dominant-hand" id="rightie">
+                    <label class="inline-block w-full mx-2 p-1 border border-gray cursor-pointer" for="rightie">
+                        <span class="inline-block p-3">Right-handed</span>
+                    </label>
+                </div>
+            </fieldset>
+        </form>
+
+    </section>
+
+
+    <section id="learn" class="flex flex-col justify-center items-center min-h-screen py-16 text-center">
+
+        <header class="max-w-md mx-auto mb-16">
+            <h2 class="text-6xl font-adineue font-bold uppercase">Learn</h2>
+            <p class="mt-6 text-lg">Do your thing and let our tech do its own. You won't regret it, trust us!</p>
+        </header>
+
+        <div id="main" class="relative text-left" style="display: none;">
+
+            <div id="test" class="z-40 sticky pin-t pin-l inline-block p-8 bg-gray text-left" style="top: 66px;"></div>
+
+            <div class="z-10 relative w-80-min h-80-min max-w-xl mx-auto bg-black">
+
+                <video autoplay="" id="video" style="
+                    -moz-transform: scaleX(-1);
+                    -o-transform: scaleX(-1);
+                    -webkit-transform: scaleX(-1);
+                    transform: scaleX(-1);
+                    display: none;
+                ">
+                </video>
+
+                <canvas id="output" class="w-full">
+
+            </canvas></div>
+
+            <img class="z-0 absolute pin w-full" src="/dist/7798c7181cb4a5b83513da0987173b69.svg" alt="">
+
+        </div>
+
+    </section>
+
+
+    <section id="results" class="flex flex-col justify-center items-center min-h-screen py-16 text-center">
+
+        <header class="max-w-md mx-auto mb-16">
+            <h2 class="text-6xl font-adineue font-bold uppercase">Results</h2>
+            <p class="mt-6 text-lg">Here's some stats that should help you get better. We're keeping track of those and will use them to suggest you new exercices in the future.</p>
+        </header>
+
+        <dl class="flex flex-wrap max-w-lg mt-12 mx-auto border-t border-l border-gray-dark">
+            <dt class="w-1/2 p-4 bg-gray border-r border-b border-gray-dark">EU</dt>
+            <dd class="w-1/2 p-4 border-r border-b border-gray-dark">36</dd>
+            <dt class="w-1/2 p-4 bg-gray border-r border-b border-gray-dark">ES</dt>
+            <dd class="w-1/2 p-4 border-r border-b border-gray-dark">35 Normal</dd>
+            <dt class="w-1/2 p-4 bg-gray border-r border-b border-gray-dark">UK</dt>
+            <dd class="w-1/2 p-4 border-r border-b border-gray-dark">3.5</dd>
+        </dl>
+
+    </section>
+
+    <script src="/dist/7b305ff6ffc0255228c650119bf7416a.js"></script>
+
+</body>
+
+</html>
