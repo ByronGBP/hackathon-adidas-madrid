@@ -21,6 +21,7 @@
 		505DC93220B9E32000FD5ED7 /* ThresholdPanGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505DC93120B9E32000FD5ED7 /* ThresholdPanGesture.swift */; };
 		505DC93920BA819400FD5ED7 /* Media.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 505DC93820BA819400FD5ED7 /* Media.scnassets */; };
 		505DC93D20BA99F400FD5ED7 /* ViewControllerOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505DC93C20BA99F400FD5ED7 /* ViewControllerOne.swift */; };
+		505DC93F20BADAE400FD5ED7 /* ViewControllerTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505DC93E20BADAE300FD5ED7 /* ViewControllerTwo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		505DC93120B9E32000FD5ED7 /* ThresholdPanGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThresholdPanGesture.swift; sourceTree = "<group>"; };
 		505DC93820BA819400FD5ED7 /* Media.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Media.scnassets; sourceTree = "<group>"; };
 		505DC93C20BA99F400FD5ED7 /* ViewControllerOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerOne.swift; sourceTree = "<group>"; };
+		505DC93E20BADAE300FD5ED7 /* ViewControllerTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTwo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				505DC93C20BA99F400FD5ED7 /* ViewControllerOne.swift */,
 				505DC90D20B9594700FD5ED7 /* ViewController.swift */,
 				505DC90F20B9594700FD5ED7 /* Main.storyboard */,
+				505DC93E20BADAE300FD5ED7 /* ViewControllerTwo.swift */,
 				505DC93820BA819400FD5ED7 /* Media.scnassets */,
 				505DC91520B9594A00FD5ED7 /* Assets.xcassets */,
 				505DC91720B9594A00FD5ED7 /* LaunchScreen.storyboard */,
@@ -189,6 +192,7 @@
 				505DC90C20B9594700FD5ED7 /* AppDelegate.swift in Sources */,
 				505DC92C20B9B3C700FD5ED7 /* ARSceneView.swift in Sources */,
 				505DC92720B9AF6200FD5ED7 /* SquareSegment.swift in Sources */,
+				505DC93F20BADAE400FD5ED7 /* ViewControllerTwo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,9 +16,23 @@ enum BitMaskCategory: Int {
 
 class ViewController: UIViewController, SCNPhysicsContactDelegate {
     
+    @IBOutlet weak var infoImage: UIImageView!
+    @IBOutlet weak var counterTimer: UILabel!
+    @IBOutlet weak var cronoLabel: UILabel!
+
+    @IBOutlet weak var resultImage: UIImageView!
+    @IBOutlet weak var secondLabels: UILabel!
+    
+    
+    @IBOutlet weak var leftLabel: UILabel!
     
     @IBOutlet weak var sceneView: ARSceneView!
     
+    
+    var timer = Timer()
+    var seconds = 3
+    
+    var counter = 0
     
     var positionBox: SCNNode! = nil
     var lenghtSize: Float! = nil
@@ -36,37 +50,41 @@ class ViewController: UIViewController, SCNPhysicsContactDelegate {
         return CGPoint(x: bounds.midX, y: bounds.midY)
     }
     
+    var infoTimer = Timer()
+    
     var session: ARSession {
         return sceneView.session
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         sceneView.delegate = self
         sceneView.scene.physicsWorld.contactDelegate = self
         sceneView.session.delegate = self
-        
-        // self.objectInteration = ObjectInteration(sceneView: sceneView)
+
         setupCamera()
         sceneView.scene.rootNode.addChildNode(fieldArea)
         sceneView.automaticallyUpdatesLighting = false
         
+        counterTimer.text = ""
+        cronoLabel.text = ""
+        
+    
+        infoTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: (#selector(desapearView)), userInfo: nil, repeats: true)
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
         
         sceneView.addGestureRecognizer(tapGesture)
-        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // Prevent the screen from being dimmed to avoid interuppting the AR experience.
         UIApplication.shared.isIdleTimerDisabled = true
         
         // Start the `ARSession`.
@@ -76,8 +94,31 @@ class ViewController: UIViewController, SCNPhysicsContactDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        // Pause the view's session
         sceneView.session.pause()
+    }
+    
+    
+    var centinella = 10;
+    @objc func desapearView() {
+        centinella -= 1
+        
+        if (centinella < 0) {
+            infoImage.alpha -= 0.05
+        }
+        
+        if infoImage.alpha < 0 {
+            infoTimer.invalidate()
+            
+        }
+    }
+    
+    @objc func appearView() {
+        resultImage.alpha += 0.1
+        secondLabels.alpha += 0.1
+
+        if infoImage.alpha > 1 {
+            infoTimer.invalidate()
+        }
     }
     
     func resetTracking() {
@@ -99,6 +140,39 @@ class ViewController: UIViewController, SCNPhysicsContactDelegate {
         camera.exposureOffset = -1
         camera.minimumExposure = -1
         camera.maximumExposure = 3
+    }
+    
+    func runTimerCounter() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    func runTimerCrono() {
+        seconds = 1
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(updateCronoTimer)), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateTimer() {
+        
+        counterTimer.text = "\(seconds)"
+        seconds -= 1
+        if (seconds < 0) {
+ 
+            counterTimer.text = ""
+            timer.invalidate()
+            createNewBox()
+            runTimerCrono()
+        }
+    }
+    
+//    let hours = Int(time) / 3600
+//    let minutes = Int(time) / 60 % 60
+//    let seconds = Int(time) % 60
+//    return String(format:”%02i:%02i:%02i”, hours, minutes, seconds)
+    
+    @objc func updateCronoTimer() {
+        cronoLabel.text = "\(seconds)"
+        seconds += 1
+        
     }
     
     func updateFocusSquare() {
@@ -126,17 +200,33 @@ class ViewController: UIViewController, SCNPhysicsContactDelegate {
             forUpdate = false
             self.fieldArea.state = .fixed
             createPlane()
+            runTimerCounter()
         }
         else {
+            // little hack in case colision fails during presentation :P
             count += 1
             if (count == 2) {
                 count = 0
                 self.planeArea.enumerateChildNodes { (node, _) in
                     node.removeFromParentNode()
                 }
+                updatedColision()
                 confettiAnimation()
                 createNewBox()
             }
+        }
+    }
+    
+    // what tha fack is this name?
+    func updatedColision () {
+        self.counter += 1
+        self.leftLabel.text = "\(self.counter) / 12"
+        
+        if (counter == 12) {
+            secondLabels.text = "\(seconds)"
+            // self.confettiAnimation()
+            timer.invalidate()
+                    infoTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: (#selector(appearView)), userInfo: nil, repeats: true)
         }
     }
     
@@ -199,26 +289,7 @@ class ViewController: UIViewController, SCNPhysicsContactDelegate {
     func randomBetweenNumbers(firstNum: CGFloat, secondNum: CGFloat) -> CGFloat {
         return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * abs(firstNum - secondNum) + min(firstNum, secondNum)
     }
-    
 }
-
-extension Int {
-    var degreesToRadians: Double { return Double(self) * .pi/180}
-}
-
-func +(left: SCNVector3, right: SCNVector3) -> SCNVector3 {
-    return SCNVector3Make(left.x + right.x, right.y, left.z + right.z)
-}
-
-func >(left: SCNVector3, right: SCNVector3) -> Bool {
-    return left.x > right.x && left.y > right.y
-}
-
-func <(left: SCNVector3, right: SCNVector3) -> Bool {
-    return left.x < right.x && left.y < right.y
-}
-
-
 
 
 

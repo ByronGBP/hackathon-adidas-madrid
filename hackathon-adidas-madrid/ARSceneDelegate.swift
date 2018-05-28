@@ -74,6 +74,7 @@ extension ViewController: ARSCNViewDelegate, ARSessionDelegate {
                 self.createNewBox()
                 self.count = 0
                 self.confettiAnimation()
+                self.updatedColision()
             }
         }
 
